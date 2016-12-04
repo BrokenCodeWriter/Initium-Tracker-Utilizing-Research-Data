@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         iTURD
 // @namespace    http://tampermonkey.net/
-// @version      1.70
+// @version      1.71
 // @description  Now with more fiber!
 // @author       You
 // @match        http://www.playinitium.com/*
@@ -277,8 +277,9 @@ function getParameterByName(name, url) {
                 // addToTab('NOTICE', 'Data has finished loading.', 'Data');
                 // addToTab('NOTICE', 'Data has finished loading.', 'Stats');
             }
+            //console.log(character_data.progression);
             $.each(character_data.progression, function(k, v) {
-                addToTab("#"+k, "S:" + parseFloat(v.strength).toFixed(2) + " | D:" + parseFloat(v.dexterity).toFixed(2) + " | I:" + parseFloat(v.intelligence).toFixed(2), "Stats");
+                addToTab("#"+k, "S:" + parseFloat(v.strength).toFixed(2) + " | D:" + parseFloat(v.dexterity).toFixed(2) + " | I:" + parseFloat(v.intelligence).toFixed(2) + " || Max S:" + parseFloat(v.maxstr).toFixed(2) + " | Max D:" + parseFloat(v.maxdex).toFixed(2) + " | Max I:" + parseFloat(v.maxint).toFixed(2), "Stats");
             });
             $('.main-button').show();
 
@@ -408,7 +409,7 @@ function getParameterByName(name, url) {
             intelligence: 5,
             progression: {
                 0: {
-                    strength: 5, dexterity: 5, intelligence: 5
+                    strength: 5, dexterity: 5, intelligence: 5, maxstr: 11, maxdex: 10, maxint: 10
                 }
             },
             attack_index: 0,
@@ -436,7 +437,7 @@ function getParameterByName(name, url) {
         character_data.strength = data.strength;
         character_data.dexterity = data.dexterity;
         character_data.intelligence = data.intelligence;
-        character_data.progression[character_data.attack_index] = { strength: data.strength, dexterity: data.dexterity, intelligence: data.intelligence };
+        character_data.progression[character_data.attack_index] = { strength: data.strength, dexterity: data.dexterity, intelligence: data.intelligence, maxstr: character_data.estimated_max_str, maxdex: character_data.estimated_max_dex, maxint: character_data.estimated_max_int };
         var d = loadData();
         d[character_data.id] = character_data;
         saveData(d);
